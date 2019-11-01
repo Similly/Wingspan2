@@ -1,5 +1,13 @@
 package Game;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -85,7 +93,25 @@ public class Main {
 
     // adds the birds to the birdstack
     public static void initBirds(){
-        birdStack.add(new Bird(0,1,0,0,"Hawk"));
+
+        JSONParser parser = new JSONParser();
+
+        try {
+            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("birds.json"));
+            JSONArray birds = (JSONArray) jsonObject.get("birds");
+
+            for (Object o : birds) {
+                JSONObject bird = (JSONObject) o;
+                System.out.println(bird.get("EnglishName"));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /*birdStack.add(new Bird(0,1,0,0,"Hawk"));
         birdStack.add(new Bird(1,3,0,1,"Klaus"));
         birdStack.add(new Bird(2,4,0,2,"Gunther"));
         birdStack.add(new Bird(0,2,0,3,"Rudiger"));
@@ -138,7 +164,7 @@ public class Main {
         birdStack.add(new Bird(1,2,0,50,"Burrowing Owl"));
         birdStack.add(new Bird(0,2,0,51,"Bushtit"));
         birdStack.add(new Bird(0,1,0,52,"California Condor"));
-        birdStack.add(new Bird(0,3,0,53,"California Quail"));
+        birdStack.add(new Bird(0,3,0,53,"California Quail"));*/
     }
 
     // return a random bird card add removes it from the bird card stack
