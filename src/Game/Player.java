@@ -99,6 +99,7 @@ public class Player {
         availableMoves.add("4: draw bird card");
         return availableMoves;
     }
+
     // calculates score for the player
     public int getScore()
     {
